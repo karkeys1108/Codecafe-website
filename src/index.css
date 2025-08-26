@@ -1,0 +1,476 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mozilla+Text:wght@200..700&family=Nata+Sans:wght@100..900&family=Oswald:wght@200..700&family=Share+Tech&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Font rendering optimizations for better clarity */
+  h1, h2, h3, h4, h5, h6 {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Custom button styles */
+  .btn {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 ease-in-out;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-to-r from-secondary-500 to-secondary-600 text-white shadow-lg hover:shadow-xl;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+.squiggle-line {
+  stroke: hsl(var(--primary));
+  stroke-width: 4;
+  fill: none;
+  stroke-linecap: round;
+  filter: url(#marker-noise);
+}
+
+.squiggle-line-thin {
+  stroke: hsl(var(--primary));
+  stroke-opacity: 0.35;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* Marker straight line styles */
+.marker-line {
+  stroke: hsl(var(--primary));
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-opacity: 0.18;
+}
+
+.marker-line-mid {
+  stroke: hsl(var(--primary));
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-opacity: 0.32;
+}
+
+.marker-line-thin {
+  stroke: hsl(var(--primary));
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-opacity: 0.6;
+}
+
+/* Gradient marker line */
+.marker-line-gradient {
+  stroke: url(#nav-gradient);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.marker-line-gradient-thin {
+  stroke: url(#nav-gradient);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+/* Optional filter fallback if no defs in inline SVG */
+svg .squiggle-line {
+  filter: none;
+}
+
+/* Hover wobble for nav links */
+@keyframes wobbleX {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+
+.group:hover .squiggle-line {
+  animation: wobbleX 0.35s ease-in-out 1;
+}
+
+.group:hover .marker-line,
+.group:hover .marker-line-mid,
+.group:hover .marker-line-thin {
+  animation: wobbleX 0.25s ease-in-out 1;
+}
+
+.group:hover .marker-line-gradient {
+  animation: wobbleX 0.25s ease-in-out 1;
+}
+
+/* Inline SVG gradient fallback using CSS mask if defs missing */
+svg:not(:has(defs)) .marker-line-gradient {
+  stroke: hsl(var(--primary));
+}
+
+/* Header sheen animation */
+@keyframes sheen {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+.animate-sheen {
+  animation: sheen 6s linear infinite;
+}
+
+/* Slow spin utilities used in Hero shapes */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes spin-slower {
+  to { transform: rotate(-360deg); }
+}
+.animate-spin-slow { animation: spin-slow 12s linear infinite; }
+.animate-spin-slower { animation: spin-slower 24s linear infinite; }
+
+/* Warm accent utilities (#b87333) */
+@layer utilities {
+  /* Marquee Animation */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  .shadow-warm { box-shadow: 0 0 18px rgba(184, 115, 51, 0.35); }
+  .shadow-warm-strong { box-shadow: 0 0 28px rgba(184, 115, 51, 0.55); }
+  .text-warm-glow { text-shadow: 0 0 14px rgba(184, 115, 51, 0.45); }
+  
+  /* Enhanced glow effects for background elements */
+  .glow-warm-soft { filter: drop-shadow(0 0 12px rgba(184, 115, 51, 0.4)); }
+  .glow-warm-medium { filter: drop-shadow(0 0 16px rgba(184, 115, 51, 0.6)); }
+  .glow-warm-strong { filter: drop-shadow(0 0 20px rgba(184, 115, 51, 0.8)); }
+  
+  /* White icon glow effects */
+  .glow-white-soft { filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)); }
+  .glow-white-medium { filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.6)); }
+  .glow-white-strong { filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.8)); }
+  
+  /* Gradient icon container styles */
+  .gradient-icon-container {
+    background: linear-gradient(135deg, #b87333 0%, #d18a44 50%, #f0c07a 100%);
+    border-radius: 0.125rem;
+    padding: 0.125rem;
+    box-shadow: 0 0 12px rgba(184, 115, 51, 0.5);
+  }
+  
+  /* Floating animation utilities */
+  .float-slow { animation: float 6s ease-in-out infinite; }
+  .float-medium { animation: float 4s ease-in-out infinite; }
+  .float-fast { animation: float 2s ease-in-out infinite; }
+  
+  /* Typography utilities for better font clarity */
+  .font-display-optimized {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  .font-body-optimized {
+    font-family: 'Lato', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  .font-mozilla-optimized {
+    font-family: 'Mozilla Text', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+  
+  /* Gradient text optimization for better descender visibility */
+  .gradient-text-optimized {
+    background-clip: text;
+    -webkit-background-clip: text;
+    padding: 0.125em 0;
+    line-height: 1.2;
+    display: inline-block;
+  }
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 50s linear infinite;
+  animation-play-state: running;
+  align-items: center;
+  padding: 0.5rem 0;
+  margin: 0 -1.5rem;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee > div {
+  margin: 0 1.5rem;
+}
+
+/* Adjust for mobile */
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 70s;
+    padding: 0.25rem 0;
+  }
+  
+  .animate-marquee > div {
+    margin: 0 1rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+}
+
+/* Tech Icons Marquee Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+.marquee-container {
+  animation: scroll var(--duration, 40s) linear infinite;
+  display: flex;
+  width: fit-content;
+}
+
+.marquee-container:hover {
+  animation-play-state: paused;
+}
+
+/* Pause animation on reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-container {
+    animation: none;
+    justify-content: space-around;
+  }
+}
+
+/* Ensure smooth scrolling on WebKit browsers */
+.marquee-container {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+}
+
+/* Remove cursor-related styles */
+body, * {
+  cursor: auto;
+}
+
+a, button, [role="button"] {
+  cursor: pointer;
+}
+
+/* Remove all custom cursor styles */
+.custom-cursor {
+  display: none !important;
+}
+
+/* Ensure default cursor on all elements */
+body, body * {
+  cursor: auto !important;
+}
+
+/* Ensure pointer cursor on interactive elements */
+a, button, [role="button"] {
+  cursor: pointer !important;
+}
+
+/* Floating animation for background elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(-5px) translateX(-3px); }
+  75% { transform: translateY(-15px) translateX(2px); }
+}
+
+/* Subtle blob animation utility used in Hero */
+@keyframes blobPulse {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.03) translate(0, -2px); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+
+.animate-blob {
+  animation: blobPulse 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
+
+/* Mobile-first: Disable cursor effects by default */
+@media (max-width: 1023px) {
+  .custom-cursor {
+    display: none !important;
+  }
+  
+  /* Re-enable default cursor for touch devices */
+  .hero-cursor-active,
+  .hero-cursor-active * {
+    cursor: auto !important;
+  }
+  
+  .hero-cursor-active a, 
+  .hero-cursor-active button, 
+  .hero-cursor-active [role="button"] {
+    cursor: pointer !important;
+  }
+}
+
+/* Ensure header and nav are properly layered */
+header,
+nav {
+  position: relative;
+  z-index: 100;
+}
+
+/* When hero is active, ensure navbar doesn't block custom cursor */
+.hero-cursor-active nav,
+.hero-cursor-active header {
+  z-index: 99 !important;
+}
+
+/* Hover effects for header and nav items */
+header a:hover,
+header button:hover,
+header [role="button"]:hover,
+nav a:hover,
+nav button:hover,
+nav [role="button"]:hover {
+  color: #b87333;
+  transition: color 0.3s ease;
+}
+
+/* Dropdown menu support */
+.dropdown-menu,
+header .dropdown-menu {
+  cursor: pointer !important;
+}
+
+/* Missing cursor animation */
+@keyframes cursorPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.8; 
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 1; 
+  }
+}
+
+/* Touch device detection */
+@media (hover: none) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
