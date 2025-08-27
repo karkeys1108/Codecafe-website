@@ -315,11 +315,11 @@ const Hero = () => {
               className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-[1.15] md:leading-[1.12] lg:leading-[1.08] font-black"
               style={{ textWrap: 'balance' }}
             >
-              <span className="block font-black tracking-[-0.015em] md:tracking-[-0.02em] lg:tracking-[-0.025em] pb-1">Shaping Ideas Into</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#b87333] via-[#d18a44] to-[#f0c07a] font-black tracking-[0.02em] md:tracking-[0.025em] lg:tracking-[0.03em] pt-1 pb-2 gradient-text-optimized">Digital futures.</span>
+              <span className="block font-black tracking-[-0.015em] md:tracking-[-0.02em] lg:tracking-[-0.025em] pb-1 font-mozilla font-black">Shaping Ideas Into</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#b87333] via-[#d18a44] to-[#f0c07a] font-black tracking-[0.02em] md:tracking-[0.025em] lg:tracking-[0.03em] pt-1 pb-2 gradient-text-optimized font-mozilla font-bold">Digital futures.</span>
             </h1>
             
-            <p className="top-20 text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto font-mozilla font-medium leading-relaxed">
+            <p className="top-20 text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto font-nata font-medium leading-relaxed">
               We design and build high‑performance websites and applications for growth.
               Reliable delivery, clean code, measurable impact.
             </p>

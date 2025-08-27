@@ -8,6 +8,9 @@ import Loading from './components/common/Loading';
 import Hero from './components/sections/Hero';
 import ServicesSection from './components/sections/Services';
 import { Toaster as Sonner } from './components/ui/sonner';
+import WhyCode2Cafe from './components/sections/WhyCode2Cafe';
+import ProductsCard from './components/sections/ProductsCard';
+import ScrollIndicator from './components/ui/ScrollIndicator';
 
 // Lazy load pages
 const Home = lazy(() => import('./pages/Home'));
@@ -36,6 +39,7 @@ function AppContent() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
+      <ScrollIndicator />
       <main className="flex-grow">
         <Suspense fallback={<Loading />}>
           <AnimatePresence mode="wait">
@@ -45,7 +49,9 @@ function AppContent() {
                 element={
                   <>
                     <Hero />
+                    <WhyCode2Cafe/>
                     <ServicesSection />
+                    <ProductsCard />
                   </>
                 }
               />

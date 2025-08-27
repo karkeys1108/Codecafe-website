@@ -89,9 +89,10 @@ const Services = () => {
       <div className="container mx-auto px-6 sm:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12 max-w-3xl mx-auto">
-          <span className="inline-block px-4 py-1.5 text-sm font-medium text-amber-400 bg-amber-900/30 rounded-full mb-4">
-            Our Services
-          </span>
+        <span className="inline-block px-8 py-4 text-lg font-semibold text-amber-400 rounded-full mb-4 font-mozilla shadow-md relative overflow-hidden">
+  <span className="absolute inset-0 bg-gradient-to-r from-amber-700 via-amber-400 to-amber-900 opacity-30 blur-xl animate-pulse rounded-full"></span>
+  <span className="relative z-10">Our Services</span>
+</span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Comprehensive Digital Solutions
           </h2>
@@ -133,16 +134,6 @@ const Services = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* CTA Section */}
-        <div className="mt-20 text-center">
-          <h3 className="text-2xl font-bold text-white mb-6">
-            Ready to start your project?
-          </h3>
-          <button className="px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-lg transition-colors duration-200">
-            Get a Free Consultation
-          </button>
         </div>
       </div>
     </section>
