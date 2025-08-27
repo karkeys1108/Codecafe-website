@@ -11,6 +11,9 @@ import { Toaster as Sonner } from './components/ui/sonner';
 import WhyCode2Cafe from './components/sections/WhyCode2Cafe';
 import ProductsCard from './components/sections/ProductsCard';
 import ScrollIndicator from './components/ui/ScrollIndicator';
+import CraftingSection from './components/sections/CraftingSection';
+import Testimonials from './components/sections/Testimonials';
+import CommunitySection from './components/sections/CommunitySection';
 
 // Lazy load pages
 const Home = lazy(() => import('./pages/Home'));
@@ -18,6 +21,7 @@ const Services = lazy(() => import('./pages/Services'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
 const WorkWithUs = lazy(() => import('./pages/WorkWithUs'));
 const Contact = lazy(() => import('./pages/Contact'));
+const Blog = lazy(() => import('./pages/Blog'));
 
 function AppContent() {
   const location = useLocation();
@@ -52,6 +56,9 @@ function AppContent() {
                     <WhyCode2Cafe/>
                     <ServicesSection />
                     <ProductsCard />
+                    <CraftingSection />
+                    <Testimonials />
+                    <CommunitySection />
                   </>
                 }
               />
@@ -59,6 +66,7 @@ function AppContent() {
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/work-with-us" element={<WorkWithUs />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
             </Routes>
           </AnimatePresence>
         </Suspense>

@@ -77,7 +77,9 @@ export default function WhyCodeCafe() {
             ))}
           </div>
         </div>
+        
       </div>
+      
     </section>
   );
 }
