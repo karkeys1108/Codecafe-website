@@ -1,10 +1,10 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import Loading from './components/common/Loading';
+import LoadingAnimation from './components/common/LoadingAnimation';
 import Hero from './components/sections/Hero';
 import ServicesSection from './components/sections/Services';
 import { Toaster as Sonner } from './components/ui/sonner';
@@ -22,6 +22,11 @@ const Portfolio = lazy(() => import('./pages/Portfolio'));
 const WorkWithUs = lazy(() => import('./pages/WorkWithUs'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const About = lazy(() => import('./pages/About'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const CookiesPolicy = lazy(() => import('./pages/CookiesPolicy'));
 
 function AppContent() {
   const location = useLocation();
@@ -32,41 +37,48 @@ function AppContent() {
     // You can implement a theme switcher later if needed.
     document.documentElement.classList.add('dark');
 
-    // Simulate loading time
+    // Simulate loading time (you can adjust this based on your actual loading needs)
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 3000); // Match this with the animation duration in LoadingAnimation
 
     return () => clearTimeout(timer);
   }, []);
+
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
       <ScrollIndicator />
       <main className="flex-grow">
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<LoadingAnimation />}>
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Hero />
-                    <WhyCode2Cafe/>
-                    <ServicesSection />
-                    <ProductsCard />
-                    <CraftingSection />
-                    <Testimonials />
-                    <CommunitySection />
-                  </>
-                }
-              />
+              <Route path="/" element={
+                <>
+                  <Hero />
+                  <WhyCode2Cafe/>
+                  <ServicesSection />
+                  <ProductsCard />
+                  <CraftingSection />
+                  <Testimonials />
+                  <CommunitySection />
+                </>
+              } />
               <Route path="/services" element={<Services />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/work-with-us" element={<WorkWithUs />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/cookies-policy" element={<CookiesPolicy />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </AnimatePresence>
         </Suspense>

@@ -75,7 +75,7 @@ const CraftingSection = () => {
   };
 
   return (
-    <section ref={ref} className="relative py-20 bg-gradient-to-b from-background to-gray-900">
+    <section ref={ref} className="mt--15 relative py-20 bg-gradient-to-b from-background to-gray-900">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.03),transparent_60%)]" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-amber-500/5 blur-3xl" />

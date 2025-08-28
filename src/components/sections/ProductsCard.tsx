@@ -1,113 +1,265 @@
 // src/components/sections/Products.tsx
-import { motion } from "framer-motion";
-
-const products = [
-  {
-    title: "Hutgen",
-    description:
-      "Next-gen innovation hub — powerful platform built to redefine how businesses scale with modern digital solutions.",
-    icon: (
-      <svg
-        className="w-8 h-8 text-amber-400"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"
-        />
-      </svg>
-    ),
-    status: "Coming Soon",
-  },
-];
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from 'react';
 
 export default function Products() {
+  const [isHovered, setIsHovered] = useState(false);
+  const [glowPosition, setGlowPosition] = useState({ x: 0, y: 0 });
+  const [time, setTime] = useState(0);
+
+  // Update time for subtle animations
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(prev => prev + 0.1);
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setGlowPosition({
+      x: ((e.clientX - rect.left) / rect.width) * 100,
+      y: ((e.clientY - rect.top) / rect.height) * 100
+    });
+  };
+
+  const glowVariants = {
+    initial: { opacity: 0.5, scale: 0.8 },
+    animate: {
+      opacity: [0.5, 0.7, 0.5],
+      scale: [0.8, 1, 0.8],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <section
-      id="solutions"
-      className="py-20 relative overflow-hidden flex justify-center items-center -mt-16"
-    >
+    <section id="solutions" className="py-24 mt--10relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 w-full">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 font-mozilla">
-          <span className="inline-block px-8 py-4 text-lg font-semibold text-amber-400 rounded-full mb-4 font-mozilla shadow-md relative overflow-hidden">
-  <span className="absolute inset-0 bg-gradient-to-r from-amber-700 via-amber-400 to-amber-900 opacity-30 blur-xl animate-pulse rounded-full"></span>
-  <span className="relative z-10">Our Products</span>
-</span>
+        <motion.div 
+          className="text-center mb-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+        >
+          <motion.span 
+            className="inline-block px-6 py-2 text-sm font-medium text-amber-400 rounded-full border border-amber-400/20 bg-amber-400/5 mb-6 backdrop-blur-sm"
+            variants={itemVariants}
+          >
+            Coming Soon
+          </motion.span>
+          
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+            variants={itemVariants}
+          >
+            Something Extraordinary
+            <span className="text-amber-400"> Is Brewing</span>
+          </motion.h2>
+          
+          <motion.p 
+            className="text-gray-400 max-w-2xl mx-auto text-lg mb-12 font-light"
+            variants={itemVariants}
+          >
+            We're crafting innovative solutions that will transform the way you work. 
+            Join our waiting list for early access.
+          </motion.p>
 
+          <motion.div 
+            className="relative max-w-2xl mx-auto"
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            variants={itemVariants}
+          >
+            {/* Animated background elements */}
+            <div className="absolute inset-0 overflow-hidden rounded-2xl">
+              <motion.div 
+                className="absolute -inset-4 bg-gradient-to-br from-amber-400/5 to-transparent rounded-2xl"
+                animate={{
+                  backgroundPosition: [
+                    '0% 0%',
+                    '100% 100%',
+                    '0% 0%'
+                  ],
+                }}
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+                style={{
+                  backgroundSize: '200% 200%',
+                }}
+              />
+              
+              {/* Moving particles */}
+              {[...Array(20)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-amber-400/30 rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                  }}
+                  animate={{
+                    y: [0, -10, 0],
+                    opacity: [0.3, 0.8, 0.3],
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    delay: Math.random() * 2,
+                  }}
+                />
+              ))}
+            </div>
 
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg font-nata">
-            Innovative platforms crafted to transform workflows, empower
-            developers, and accelerate business growth.
-          </p>
-        </div>
-
-        {/* Centered Card */}
-        <div className="flex justify-center">
-          {products.map((product, index) => (
-            <motion.div
-              key={index}
-              initial={{ y: 30, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.2,
+            {/* Main card */}
+            <motion.div 
+              className="relative bg-gradient-to-br from-gray-900/80 to-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-8 overflow-hidden"
+              initial={{ transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg)' }}
+              animate={{
+                transform: isHovered 
+                  ? `perspective(1000px) rotateX(${(glowPosition.y - 50) / 15}deg) rotateY(${(glowPosition.x - 50) / 15}deg)`
+                  : 'perspective(1000px) rotateX(0) rotateY(0)',
+                boxShadow: isHovered 
+                  ? '0 25px 50px -12px rgba(245, 158, 11, 0.15)'
+                  : '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
               }}
-              className="group relative max-w-md w-full"
+              transition={{ type: 'spring', stiffness: 50, damping: 20 }}
             >
-              <div className="h-full bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-2xl p-8 transition-all duration-300 hover:border-amber-400/30 hover:shadow-lg hover:shadow-amber-500/5">
-                <div className="flex flex-col h-full">
-                  <div className="mb-6 p-3 w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                    {product.icon}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-2xl font-bold text-white font-mozilla">
-                        {product.title}
-                      </h3>
-                      <span
-                        className={`px-3 py-1 text-xs font-medium rounded-full ${
-                          product.status === "In Development"
-                            ? "text-blue-400 bg-blue-900/30"
-                            : "text-amber-400 bg-amber-900/30"
-                        }`}
-                      >
-                        {product.status}
-                      </span>
-                    </div>
-                    <p className="text-gray-400 mb-6 font-nata">
-                      {product.description}
-                    </p>
-                  </div>
-                  <button className="mt-auto w-full py-3 px-6 rounded-lg bg-white/5 border border-white/10 text-sm font-medium text-white hover:bg-white/10 transition-colors duration-300 flex items-center justify-center gap-2 group-hover:bg-amber-500/10 group-hover:border-amber-500/20 group-hover:text-amber-400">
-                    Learn More
-                    <svg
-                      className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      />
+              {/* Animated border highlight */}
+              <motion.div 
+                className="absolute inset-0 rounded-2xl pointer-events-none"
+                style={{
+                  background: `radial-gradient(
+                    600px circle at ${glowPosition.x}% ${glowPosition.y}%,
+                    rgba(245, 158, 11, 0.1),
+                    transparent 40%
+                  )`,
+                }}
+                initial={false}
+                animate={{
+                  opacity: isHovered ? 1 : 0.5,
+                }}
+                transition={{ duration: 0.3 }}
+              />
+
+              <div className="relative z-10 text-center">
+                <motion.div 
+                  className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/10 mx-auto mb-6 flex items-center justify-center"
+                  animate={{
+                    rotate: time * 5,
+                    scale: [1, 1.05, 1],
+                  }}
+                  transition={{
+                    scale: {
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    },
+                  }}
+                >
+                  <svg
+                    className="w-10 h-10 text-amber-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
+                  </svg>
+                </motion.div>
+
+                <motion.h3 
+                  className="text-2xl font-bold text-white mb-3"
+                  animate={{
+                    textShadow: isHovered 
+                      ? '0 0 20px rgba(245, 158, 11, 0.5)' 
+                      : 'none',
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  Stay Tuned for the Big Reveal
+                </motion.h3>
+
+                <motion.p 
+                  className="text-gray-400 mb-8 max-w-md mx-auto leading-relaxed"
+                  animate={{
+                    opacity: isHovered ? 0.9 : 0.7,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  We're putting the finishing touches on something truly special. 
+                  Sign up to be the first to know when we launch.
+                </motion.p>
+
+                <motion.div 
+                  className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0,
+                    transition: { delay: 0.4 }
+                  }}
+                >
+                  <motion.button
+                    whileHover={{ 
+                      scale: 1.03,
+                      boxShadow: '0 10px 25px -5px rgba(245, 158, 11, 0.2)'
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    className="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-medium rounded-lg flex items-center gap-2"
+                  >
+                    <span>Get Early Access</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
-                  </button>
-                </div>
+                  </motion.button>
+                  
+                  <motion.button
+                    whileHover={{ 
+                      scale: 1.03,
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    className="px-6 py-3 text-gray-300 font-medium rounded-lg border border-gray-700 hover:border-amber-500/30 hover:text-white transition-colors"
+                  >
+                    Learn More
+                  </motion.button>
+                </motion.div>
               </div>
             </motion.div>
-          ))}
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-      
     </section>
   );
 }
