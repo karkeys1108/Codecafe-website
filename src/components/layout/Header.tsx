@@ -6,9 +6,9 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "Services", path: "/#services" },
+  {name: "Works" , path: "/#design"},
   { name: "Join Us", path: "/#join-us" },
   { name: "About Us", path: "/about" },
-  { name: "Blog", path: "/blog" },
 ];
 
 const Header = () => {
@@ -22,8 +22,8 @@ const Header = () => {
     const handleScroll = () => {
       if (location.pathname !== '/') return;
       
-      const sections = ["services", "join-us"];
-      const scrollPosition = window.scrollY + 100; // Adjust offset as needed
+      const sections = ["services", "design", "join-us"];
+      const scrollPosition = window.scrollY + 100; 
       
       for (const section of sections) {
         const el = document.getElementById(section);

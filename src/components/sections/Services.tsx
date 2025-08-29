@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Code, Layout, Smartphone, ShoppingCart, Search, Settings, X } from 'lucide-react';
+import { Code, Layout, Smartphone, ShoppingCart, Search, Settings, X, Phone } from 'lucide-react';
 import { SiHtml5, SiCss3, SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiNodedotjs, SiGraphql, SiPython, SiDocker, SiGithub, SiGit, SiMongodb, SiTailwindcss } from 'react-icons/si';
+import BookCallModal from '../modals/BookCallModal';
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLearnMore = (id: number) => {
     setSelectedService(id);
@@ -17,6 +19,11 @@ const Services = () => {
     document.body.style.overflow = 'auto'; // Re-enable scrolling
     // Small delay to allow the animation to complete before resetting the selected service
     setTimeout(() => setSelectedService(null), 300);
+  };
+
+  const openBookCallModal = () => {
+    closePopover();
+    setIsModalOpen(true);
   };
 
   // Service details for popovers
@@ -185,83 +192,71 @@ const Services = () => {
       </div>
 
       {/* Popover Overlay */}
-      {isPopoverOpen && selectedService && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      {selectedService && isPopoverOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={closePopover}>
           <div 
-            className="relative bg-gray-900 border border-gray-700 rounded-xl max-w-lg w-full max-h-[80vh] overflow-y-auto"
+            className="relative w-full max-w-2xl bg-background rounded-xl p-8 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <button 
+            <button
               onClick={closePopover}
-              className="absolute top-3 right-3 text-gray-400 hover:text-white p-1 rounded-full hover:bg-gray-800 transition-colors"
-              aria-label="Close popover"
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+              aria-label="Close"
             >
-              <X className="w-5 h-5" />
+              <X size={24} />
             </button>
             
-            <div className="p-6">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 flex items-center justify-center bg-amber-900/20 rounded-lg mr-3">
-                  {services.find(s => s.id === selectedService)?.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white">
-                  {serviceDetails[selectedService as keyof typeof serviceDetails].title}
-                </h3>
+            <h3 className="text-2xl font-bold text-white mb-2">{serviceDetails[selectedService].title}</h3>
+            <p className="text-gray-300 mb-6">{serviceDetails[selectedService].description}</p>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 className="font-semibold text-white mb-3">What's Included</h4>
+                <ul className="space-y-2">
+                  {serviceDetails[selectedService].features.map((feature, index) => (
+                    <li key={index} className="flex items-start">
+                      <svg className="h-5 w-5 text-amber-400 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-gray-300">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
               
-              <p className="text-sm text-gray-300 mb-4">
-                {serviceDetails[selectedService as keyof typeof serviceDetails].description}
-              </p>
-              
-              <div className="grid gap-4 mb-4">
-                <div>
-                  <h4 className="text-sm font-semibold text-white mb-2 flex items-center">
-                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></span>
-                    What We Offer
-                  </h4>
-                  <ul className="space-y-1 text-sm">
-                    {serviceDetails[selectedService as keyof typeof serviceDetails].features.map((feature, i) => (
-                      <li key={i} className="flex items-start">
-                        <svg className="w-3.5 h-3.5 text-amber-400 mt-0.5 mr-1.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-gray-300">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="text-sm font-semibold text-white mb-2 flex items-center">
-                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></span>
-                    Technologies
-                  </h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {serviceDetails[selectedService as keyof typeof serviceDetails].technologies.map((tech, i) => (
-                      <span key={i} className="px-2 py-0.5 bg-gray-800/80 text-gray-300 text-xs rounded-full">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+              <div>
+                <h4 className="font-semibold text-white mb-3">Technologies We Use</h4>
+                <div className="flex flex-wrap gap-3">
+                  {serviceDetails[selectedService].technologies.map((tech, index) => (
+                    <span key={index} className="px-3 py-1 bg-gray-800 text-gray-200 text-sm rounded-full">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
-              
-              <div className="pt-3 border-t border-gray-800">
-                <a 
-                  href="#contact" 
-                  onClick={closePopover}
-                  className="inline-flex items-center px-4 py-1.5 text-sm bg-amber-500 text-gray-900 font-medium rounded-full hover:bg-amber-400 transition-colors"
-                >
-                  Get a Free Quote
-                  <svg className="ml-1.5 w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </a>
-              </div>
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-gray-800 flex flex-col sm:flex-row gap-4">
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="flex items-center text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors duration-200 group-hover:translate-x-1"
+                aria-label={`Book a free call`}
+              >
+                <Phone size={18} />
+                Book a Free Call
+              </button>
+              <button
+                onClick={closePopover}
+                className="px-6 py-3 border border-gray-700 text-gray-300 font-medium rounded-lg hover:bg-gray-800/50 transition-colors"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
       )}
+      
+      <BookCallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       
       <div className="container mx-auto px-6 sm:px-8 relative z-10">
         {/* Section Header */}
@@ -321,15 +316,15 @@ const Services = () => {
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
             Let's discuss how we can help you achieve your goals. Schedule a free consultation call with our team.
           </p>
-          <a 
-            href="#contact" 
+          <button 
+            onClick={() => setIsModalOpen(true)}
             className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-full bg-amber-500 text-gray-900 hover:bg-amber-400 transition-colors duration-300 shadow-lg hover:shadow-amber-500/20"
           >
             Book a Free Call
             <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </section>

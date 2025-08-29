@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 import Button from '../ui/Button';
+import { useState } from 'react';
+import BookCallModal from '../modals/BookCallModal';
 
 const CTA = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.2,
@@ -35,18 +38,31 @@ const CTA = () => {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
               Let's build something amazing together. Reach out to us to discuss your ideas.
             </p>
-            <Button 
-              variant="primary"
-              size="lg"
-              className="group"
-              iconPosition="right"
-              icon={<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />}
-            >
-              Get in Touch
-            </Button>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button 
+                variant="primary"
+                size="lg"
+                className="group"
+                iconPosition="right"
+                icon={<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />}
+              >
+                Get in Touch
+              </Button>
+              <Button 
+                variant="outline"
+                size="lg"
+                className="group border-primary/30 hover:bg-primary/10"
+                iconPosition="left"
+                icon={<Phone className="w-5 h-5 group-hover:animate-pulse" />}
+                onClick={() => setIsModalOpen(true)}
+              >
+                Book a Free Call
+              </Button>
+            </div>
           </div>
         </div>
       </div>
+      <BookCallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </motion.section>
   );
 };
