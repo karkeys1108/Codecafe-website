@@ -237,14 +237,14 @@ const Services = () => {
             </div>
             
             <div className="mt-8 pt-6 border-t border-gray-800 flex flex-col sm:flex-row gap-4">
-              <button 
-                onClick={() => setIsModalOpen(true)}
-                className="flex items-center text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors duration-200 group-hover:translate-x-1"
-                aria-label={`Book a free call`}
-              >
-                <Phone size={18} />
-                Book a Free Call
-              </button>
+            <button 
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors duration-200 group-hover:translate-x-1 space-x-10"
+            aria-label="Book a free call"
+          >
+            <Phone size={16} className="mr-2" />
+            Book a Free Call
+          </button>
               <button
                 onClick={closePopover}
                 className="px-6 py-3 border border-gray-700 text-gray-300 font-medium rounded-lg hover:bg-gray-800/50 transition-colors"
@@ -311,20 +311,35 @@ const Services = () => {
         </div>
 
         {/* Book a Call Button - Moved to bottom */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-16 group relative">
           <h3 className="text-2xl font-bold text-white mb-4">Ready to start your project?</h3>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
             Let's discuss how we can help you achieve your goals. Schedule a free consultation call with our team.
           </p>
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-full bg-amber-500 text-gray-900 hover:bg-amber-400 transition-colors duration-300 shadow-lg hover:shadow-amber-500/20"
-          >
-            Book a Free Call
-            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
+          <div className="relative inline-block group">
+            {/* Tooltip */}
+            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+              <div className="bg-gray-900 text-white text-sm px-3 py-1.5 rounded-lg shadow-lg border border-gray-800 whitespace-nowrap">
+                Schedule a 30-min free consultation
+                <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gray-900 border-b border-r border-gray-800 rotate-45"></div>
+              </div>
+            </div>
+            
+            {/* Button */}
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="relative inline-flex items-center justify-center px-8 py-3.5 text-base font-medium rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-gray-900 hover:from-amber-400 hover:to-amber-500 transition-all duration-300 shadow-lg hover:shadow-amber-500/30 transform hover:-translate-y-0.5 group-hover:scale-105"
+            >
+              <span className="relative z-10 flex items-center">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                Book a Free Call
+              </span>
+              {/* Animated border effect on hover */}
+              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
