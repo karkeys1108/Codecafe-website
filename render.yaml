@@ -4,6 +4,16 @@ services:
     env: static
     buildCommand: npm install && npm run build
     staticPublishPath: "./dist"
+    routes:
+      - type: rewrite
+        source: "/*"
+        destination: "/index.html"
     envVars:
       - key: NODE_VERSION
         value: 18.x
+      - key: VITE_BASE_URL
+        value: "/"
+redirects:
+  - from: "www.codecafe.live"
+    to: "codecafe.live"
+    status: 301
