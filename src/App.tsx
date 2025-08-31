@@ -79,7 +79,11 @@ function AppContent() {
                   <TermsOfService />
                 </PageTransition>
               } />
-              <Route path="/cookies-policy" element={<CookiesPolicy />} />
+              <Route path="/cookies-policy" element={
+                <PageTransition>
+                  <CookiesPolicy />
+                </PageTransition>
+              } />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </AnimatePresence>

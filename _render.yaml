@@ -23,3 +23,6 @@ redirects:
   - from: "https://codecafe-qf8e.onrender.com/terms-of-service"
     to: "https://codecafe-qf8e.onrender.com/terms-of-service/"
     status: 301
+  - from: "https://codecafe-qf8e.onrender.com/cookies-policy"
+    to: "https://codecafe-qf8e.onrender.com/cookies-policy/"
+    status: 301
