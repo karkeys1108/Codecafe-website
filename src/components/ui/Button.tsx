@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
 type ButtonProps = {
   children: ReactNode;
@@ -12,6 +13,7 @@ type ButtonProps = {
   fullWidth?: boolean;
   icon?: ReactNode;
   iconPosition?: 'left' | 'right';
+  to?: string;
 };
 
 const Button = ({
@@ -25,6 +27,8 @@ const Button = ({
   fullWidth = false,
   icon,
   iconPosition = 'left',
+  to,
+  ...props
 }: ButtonProps) => {
   const baseStyles = 'inline-flex items-center justify-center rounded-full font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2';
   
@@ -44,6 +48,32 @@ const Button = ({
   const disabledStyles = 'opacity-50 cursor-not-allowed';
   const fullWidthStyle = 'w-full';
 
+  const buttonContent = (
+    <>
+      {icon && iconPosition === 'left' && (
+        <span className="mr-2">{icon}</span>
+      )}
+      {children}
+      {icon && iconPosition === 'right' && (
+        <span className="ml-2">{icon}</span>
+      )}
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link
+        to={to}
+        className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${
+          disabled ? disabledStyles : ''
+        } ${fullWidth ? fullWidthStyle : ''} ${className}`}
+        {...props}
+      >
+        {buttonContent}
+      </Link>
+    );
+  }
+
   return (
     <motion.button
       type={type}
@@ -57,14 +87,9 @@ const Button = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      {...props}
     >
-      {icon && iconPosition === 'left' && (
-        <span className="mr-2">{icon}</span>
-      )}
-      {children}
-      {icon && iconPosition === 'right' && (
-        <span className="ml-2">{icon}</span>
-      )}
+      {buttonContent}
     </motion.button>
   );
 };

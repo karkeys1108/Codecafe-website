@@ -11,7 +11,7 @@ export default function WhyCodeCafe() {
   ];
 
   return (
-    <section className="relative">
+    <section className="relative hidden sm:block">
       <div className=" px-20 relative w-full flex flex-col items-center justify-center pt--10 pb-20">
         {/* Futuristic BG */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-900 via-black to-gray-900">

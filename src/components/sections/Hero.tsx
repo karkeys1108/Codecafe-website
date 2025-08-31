@@ -331,6 +331,7 @@ const Hero = () => {
               <Button 
                 variant="primary"
                 size="lg"
+                to="/#contact"
                 className="group gold-hover shadow-lg shadow-warm hover:shadow-warm-strong transition-all duration-300 transform hover:-translate-y-0.5 bg-gradient-to-r from-[#b87333] via-[#cf8b3c] to-[#e9b168] text-white border border-white/10 focus:ring-2 focus:ring-[#b87333] focus:ring-offset-2 focus:ring-offset-background hover:from-[#bf6b2b] hover:to-[#f3c77f] text-lg font-oswald font-semibold"
                 iconPosition="right"
                 icon={<ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />}
@@ -341,6 +342,7 @@ const Hero = () => {
               <Button 
                 variant="outline"
                 size="lg"
+                to="/#portfolio"
                 className="group border-[#b87333]/50 hover:border-[#b87333] text-foreground/80 hover:text-[#b87333] focus:ring-[#b87333] transition-colors duration-300 text-lg font-oswald font-semibold"
               >
                 View Our Work

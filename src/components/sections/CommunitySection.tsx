@@ -10,7 +10,7 @@ const CommunitySection = () => {
       border: 'border-amber-500/30 hover:border-amber-500',
       iconBg: 'bg-amber-100/10 group-hover:bg-amber-100/20',
       iconColor: 'text-amber-400',
-      link: 'https://t.me/yourtelegram',
+      link: 'https://t.me/cod_e_cafe',
       description: 'Join our Telegram group',
     },
     {
@@ -20,7 +20,7 @@ const CommunitySection = () => {
       border: 'border-amber-500/30 hover:border-amber-500',
       iconBg: 'bg-amber-100/10 group-hover:bg-amber-100/20',
       iconColor: 'text-amber-400',
-      link: 'https://discord.gg/yourdiscord',
+      link: 'https://discord.gg/geEebNr8',
       description: 'Chat with our community',
     },
     {
@@ -30,7 +30,7 @@ const CommunitySection = () => {
       border: 'border-amber-500/30 hover:border-amber-500',
       iconBg: 'bg-amber-100/10 group-hover:bg-amber-100/20',
       iconColor: 'text-amber-400',
-      link: 'https://instagram.com/yourusername',
+      link: 'https://www.instagram.com/cod.e.cafe?igsh=MTJpOTQ5MXBsdGp3YQ==',
       description: 'Follow our updates',
     },
     {
@@ -40,7 +40,7 @@ const CommunitySection = () => {
       border: 'border-amber-500/30 hover:border-amber-500',
       iconBg: 'bg-amber-100/10 group-hover:bg-amber-100/20',
       iconColor: 'text-amber-400',
-      link: 'https://wa.me/yourwhatsapp',
+      link: 'https://whatsapp.com/channel/0029VbB5pikF6smrn7wtqs20',
       description: 'Message us directly',
     },
   ];

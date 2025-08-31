@@ -222,38 +222,12 @@ export default function Products() {
                 </motion.p>
 
                 <motion.div 
-                  className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ 
-                    opacity: 1, 
-                    y: 0,
-                    transition: { delay: 0.4 }
-                  }}
+                  className="mt-8 flex flex-col sm:flex-row gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
                 >
-                  <motion.button
-                    whileHover={{ 
-                      scale: 1.03,
-                      boxShadow: '0 10px 25px -5px rgba(245, 158, 11, 0.2)'
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-medium rounded-lg flex items-center gap-2"
-                  >
-                    <span>Get Early Access</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </motion.button>
-                  
-                  <motion.button
-                    whileHover={{ 
-                      scale: 1.03,
-                      backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-6 py-3 text-gray-300 font-medium rounded-lg border border-gray-700 hover:border-amber-500/30 hover:text-white transition-colors"
-                  >
-                    Learn More
-                  </motion.button>
+                  {/* Buttons have been removed as per request */}
                 </motion.div>
               </div>
             </motion.div>

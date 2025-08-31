@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Clock, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Instagram, MessageCircle, MessageSquare, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 import BookCallModal from '../modals/BookCallModal';
 import { useState } from 'react';
@@ -45,16 +45,17 @@ const Footer = () => {
               </p>
               <div className="flex space-x-4 pt-2">
                 {[
-                  { icon: Twitter, link: "https://twitter.com" },
-                  { icon: Instagram, link: "https://instagram.com" },
-                  { icon: Linkedin, link: "https://linkedin.com" },
-                  { icon: Github, link: "https://github.com" },
-                ].map(({ icon: Icon, link }, i) => (
+                  { icon: Instagram, label: 'Instagram', link: "https://www.instagram.com/cod.e.cafe?igsh=MTJpOTQ5MXBsdGp3YQ==" },
+                  { icon: MessageCircle, label: 'Discord', link: "https://discord.gg/geEebNr8" },
+                  { icon: MessageSquare, label: 'WhatsApp', link: "https://whatsapp.com/channel/0029VbB5pikF6smrn7wtqs20" },
+                  { icon: Send, label: 'Telegram', link: "https://t.me/cod_e_cafe" },
+                ].map(({ icon: Icon, label, link }, i) => (
                   <motion.a 
                     key={i}
                     href={link} 
                     target="_blank" 
                     rel="noopener noreferrer"
+                    aria-label={label}
                     whileHover={{ scale: 1.15 }}
                     className="p-2 rounded-full bg-gray-800 hover:bg-amber-500/20 text-gray-400 hover:text-amber-400 transition"
                   >
@@ -77,9 +78,9 @@ const Footer = () => {
                 {[
                   { name: 'Home', path: '/' },
                   { name: 'Services', path: '/#services' },
-                  { name: 'Portfolio', path: '/portfolio' },
-                  { name: 'Blog', path: '/blog' },
-                  { name: 'Contact', path: '/#contact' },
+                  { name: 'Works', path: '/#design' },
+                  { name: 'Join Us', path: '/#join-us' },
+                  { name: 'About Us', path: '/about' },
                 ].map((link) => (
                   <li key={link.name}>
                     <a 
@@ -112,12 +113,8 @@ const Footer = () => {
                   <span>+91 95144 00601</span>
                 </li>
                 <li className="flex items-start space-x-3">
-                  <MapPin className="w-5 h-5 text-amber-400 mt-0.5" />
-                  <span>123 Tech Street, Silicon Valley, CA 94025</span>
-                </li>
-                <li className="flex items-start space-x-3">
                   <Clock className="w-5 h-5 text-amber-400 mt-0.5" />
-                  <span>Mon - Fri: 9:00 AM - 6:00 PM</span>
+                  <span>24/7</span>
                 </li>
               </ul>
               <a 

@@ -34,7 +34,7 @@ const Header = () => {
           if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
             setActiveSection(section);
             break;
-          } else if (scrollPosition < document.getElementById('services')?.offsetTop || 0) {
+          } else if (scrollPosition < (document.getElementById('services')?.offsetTop ?? 0)) {
             setActiveSection(""); // No section is active (at the top)
           }
         }
@@ -112,24 +112,27 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative mt-4 flex h-16 items-center justify-between rounded-2xl border border-border/20 bg-background/60 px-6 backdrop-blur-xl overflow-hidden">
-          {/* Logo */}
-          <div className="text-2xl font-bold font-display tracking-tight">
+      <div className="container mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="relative mt-4 mx-2 sm:mx-0 flex h-14 sm:h-16 items-center justify-between rounded-2xl border border-border/20 bg-background/80 px-4 sm:px-6 backdrop-blur-xl overflow-hidden">
+          {/* Logo - Made slightly smaller on mobile */}
+          <div className="flex items-center space-x-2">
+            <img 
+              src="/images/Codecafe.png" 
+              alt="CodeCafe Logo" 
+              className="h-14 w-14 sm:h-16 sm:w-16"
+            />
             <a
               href="/"
               onClick={(e) => handleNavLinkClick(e, "/")}
-              className={`transition-colors ${
-                isActive("/") ? "text-amber-400" : "text-muted-foreground hover:text-amber-400"
-              }`}
+              className={`text-xl sm:text-2xl font-bold font-display tracking-tight text-white`}
             >
-              CodeCafe
+              Code<span className="text-amber-400">Cafe</span>
             </a>
           </div>
 
-          {/* Desktop Nav */}
+          {/* Desktop Nav - Hidden on mobile */}
           <nav className="hidden md:block">
-            <ul className="flex items-center space-x-2">
+            <ul className="flex items-center space-x-1 sm:space-x-2">
               {navLinks.map((link) => {
                 const active = isActive(link.path);
                 return (
@@ -137,7 +140,7 @@ const Header = () => {
                     <a
                       href={link.path}
                       onClick={(e) => handleNavLinkClick(e, link.path)}
-                      className={`group relative rounded-md px-3 py-2 text-[13px] uppercase tracking-wider font-semibold transition-colors duration-300 ${
+                      className={`group relative rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-[13px] uppercase tracking-wider font-semibold transition-colors duration-300 ${
                         active
                           ? "text-amber-400"
                           : "text-muted-foreground hover:text-amber-400"
@@ -160,8 +163,9 @@ const Header = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-muted-foreground hover:text-amber-400 focus:outline-none transition-colors"
-              aria-label="Toggle menu"
+              className="p-2 -mr-2 text-muted-foreground hover:text-amber-400 focus:outline-none transition-colors"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -173,21 +177,32 @@ const Header = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -15 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.25 }}
-            className="absolute top-20 left-0 right-0 z-40 md:hidden px-4"
+            exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed inset-x-0 top-20 z-40 md:hidden px-4"
+            style={{
+              // Prevent background scrolling when menu is open
+              position: 'fixed',
+              height: 'calc(100vh - 5rem)',
+              overflowY: 'auto',
+              WebkitOverflowScrolling: 'touch',
+            }}
           >
-            <div className="rounded-xl border border-border/20 bg-background/90 p-4 backdrop-blur-xl shadow-lg">
+            <div className="rounded-xl border border-border/20 bg-background/95 p-2 backdrop-blur-xl shadow-lg">
               {navLinks.map((link) => {
                 const active = isActive(link.path);
                 return (
                   <a
                     key={link.name}
                     href={link.path}
-                    onClick={(e) => handleNavLinkClick(e, link.path)}
-                    className={`block rounded-lg px-3 py-2 text-base font-medium transition-colors ${
+                    onClick={(e) => {
+                      handleNavLinkClick(e, link.path);
+                      // Close menu after clicking a link
+                      setIsOpen(false);
+                    }}
+                    className={`block rounded-lg px-4 py-3 my-1 text-base font-medium transition-colors ${
                       active
                         ? "bg-amber-400/10 text-amber-400"
                         : "text-muted-foreground hover:bg-amber-400/5 hover:text-amber-400"
