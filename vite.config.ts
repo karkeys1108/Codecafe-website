@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
+// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [react()],
   base: mode === 'production' ? '/' : '/',
@@ -17,7 +18,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     port: 3000,
     open: true,
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true,
+      verbose: true,
+    },
   },
   resolve: {
     alias: {
@@ -25,6 +29,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   define: {
-    'process.env': {}
-  }
+    'process.env': {},
+    'import.meta.env.BASE_URL': JSON.stringify('/'),
+  },
 }));

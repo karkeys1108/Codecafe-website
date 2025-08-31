@@ -1,2 +1,12 @@
 # Handle client-side routing
-/* /index.html 200
+/*    /index.html   200
+
+# Handle specific routes
+/terms-of-service*    /index.html    200
+/cookies-policy*      /index.html    200
+
+# Cache static assets for 1 year
+/assets/*  /assets/:splat  200  Cache-Control: public, max-age=31536000
+
+# Don't cache HTML
+/*.html    /:splat  200  Cache-Control: no-cache, no-store, must-revalidate
