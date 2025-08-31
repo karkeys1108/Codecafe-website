@@ -63,6 +63,68 @@
     text-rendering: optimizeLegibility;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
+  
+  /* Base cursor styles */
+  html, body {
+    cursor: default; /* Default arrow cursor for the page */
+  }
+
+  /* Pointer cursor for all interactive elements */
+  a, button, [role="button"], 
+  input, select, textarea, 
+  [tabindex]:not([tabindex="-1"]),
+  [onclick], [data-action],
+  /* Components that should show pointer cursor */
+  .btn, button, [type='button'], [type='submit'],
+  /* Custom components */
+  [data-cursor="pointer"] {
+    cursor: pointer !important;
+  }
+
+  /* Ensure text inputs and textareas show default cursor for text selection */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  [contenteditable] {
+    cursor: text !important;
+  }
+
+  /* Disable text cursor in non-interactive elements */
+  *:not(input):not(textarea):not([contenteditable]) {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+  
+  /* Add pointer cursor to all interactive elements */
+  a, button, [role="button"], 
+  input[type="submit"], input[type="button"], 
+  [tabindex]:not([tabindex="-1"]),
+  /* Add pointer to all button variants */
+  .btn, button, [type='button'], [type='submit'],
+  /* Add pointer to any element that acts as a button */
+  [onclick], [data-action] {
+    @apply cursor-pointer;
+  }
+  
+  /* Ensure buttons maintain pointer cursor on all states */
+  button:hover, button:focus, button:active,
+  .btn:hover, .btn:focus, .btn:active,
+  [type='button']:hover, [type='button']:focus, [type='button']:active,
+  [type='submit']:hover, [type='submit']:focus, [type='submit']:active {
+    @apply cursor-pointer;
+  }
+  
+  /* Ensure links in content are styled as interactive */
+  .prose a, .content a {
+    @apply cursor-pointer;
+  }
 }
 
 @layer components {
@@ -359,30 +421,6 @@ svg:not(:has(defs)) .marker-line-gradient {
 .marquee-container {
   -webkit-backface-visibility: hidden;
   -webkit-transform-style: preserve-3d;
-}
-
-/* Remove cursor-related styles */
-body, * {
-  cursor: auto;
-}
-
-a, button, [role="button"] {
-  cursor: pointer;
-}
-
-/* Remove all custom cursor styles */
-.custom-cursor {
-  display: none !important;
-}
-
-/* Ensure default cursor on all elements */
-body, body * {
-  cursor: auto !important;
-}
-
-/* Ensure pointer cursor on interactive elements */
-a, button, [role="button"] {
-  cursor: pointer !important;
 }
 
 /* Floating animation for background elements */

@@ -14,6 +14,7 @@ import ScrollIndicator from './components/ui/ScrollIndicator';
 import CraftingSection from './components/sections/CraftingSection';
 import Testimonials from './components/sections/Testimonials';
 import CommunitySection from './components/sections/CommunitySection';
+import GitHubStarPrompt from './components/GitHubStarPrompt';
 
 // Lazy load pages
 const Home = lazy(() => import('./pages/Home'));
@@ -79,6 +80,7 @@ function AppContent() {
           </AnimatePresence>
         </Suspense>
       </main>
+      <GitHubStarPrompt />
       <Footer />
       <Toaster position="bottom-right" />
       <Sonner />
@@ -88,9 +90,12 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <>
+      <Toaster position="top-center" />
+      <Router>
+        <AppContent />
+      </Router>
+    </>
   );
 }
 

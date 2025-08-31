@@ -1,6 +1,72 @@
-import { motion } from 'framer-motion';
-import { Cookie, Shield, Settings, Lock } from 'lucide-react';
+import { Cookie, Settings, Shield, Info, Users, Clock, UserCheck, BarChart2 } from 'lucide-react';
 import PageTransition from '../components/common/PageTransition';
+import PolicyLayout, { PolicySection } from '../components/policy/PolicyLayout';
+import { useVisitorTracking } from '../hooks/useVisitorTracking';
+import { formatDistanceToNow } from 'date-fns';
+
+const VisitorStats = () => {
+  const { visitorData, totalVisitors, isLoading } = useVisitorTracking();
+
+  if (isLoading || !visitorData) {
+    return null;
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="bg-accent/5 p-4 rounded-lg border border-border">
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-primary/10 rounded-full">
+            <Users className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Total Visitors</p>
+            <p className="text-xl font-semibold">{totalVisitors.toLocaleString()}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-accent/5 p-4 rounded-lg border border-border">
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-primary/10 rounded-full">
+            <UserCheck className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Your Visits</p>
+            <p className="text-xl font-semibold">{visitorData.visitCount}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-accent/5 p-4 rounded-lg border border-border">
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-primary/10 rounded-full">
+            <Clock className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">First Visit</p>
+            <p className="text-sm font-medium">
+              {formatDistanceToNow(new Date(visitorData.firstVisit), { addSuffix: true })}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-accent/5 p-4 rounded-lg border border-border">
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-primary/10 rounded-full">
+            <BarChart2 className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Status</p>
+            <p className="text-sm font-medium">
+              {visitorData.isReturning ? 'Returning Visitor' : 'New Visitor'}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const CookiesPolicy = () => {
   const cookieTypes = [
@@ -28,136 +94,88 @@ const CookiesPolicy = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-gray-300 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12"
-          >
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-900/40 text-amber-400 mb-6">
-              <Cookie className="w-8 h-8" />
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">Cookies Policy</h1>
-            <p className="text-lg text-gray-400">Last Updated: August 28, 2025</p>
-          </motion.div>
+      <PolicyLayout 
+        title="Cookies & Visitor Analytics" 
+        lastUpdated="August 31, 2025"
+        icon={<Cookie className="w-6 h-6" />}
+      >
+        <PolicySection title="Visitor Statistics">
+          <p className="mb-4">
+            We use cookies to analyze visitor behavior and improve our website. Here's what we track:
+          </p>
+          <VisitorStats />
+        </PolicySection>
 
-          <div className="space-y-8">
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50"
-            >
-              <h2 className="text-2xl font-semibold text-white mb-4">What Are Cookies?</h2>
-              <p className="text-gray-300 mb-4">
-                Cookies are small text files that are stored on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and enabling certain functionalities.
-              </p>
-              <p className="text-gray-300">
-                By using our website, you consent to the use of cookies in accordance with this policy. You can manage your cookie preferences at any time through your browser settings.
-              </p>
-            </motion.section>
+        <PolicySection title="What Are Cookies">
+          <p>Cookies are small text files that are stored on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and enabling certain functionalities.</p>
+        </PolicySection>
 
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50"
-            >
-              <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
-                <Shield className="w-6 h-6 mr-2 text-amber-400" />
-                Types of Cookies We Use
-              </h2>
-              <div className="grid gap-6 md:grid-cols-2">
-                {cookieTypes.map((cookie, index) => (
-                  <motion.div 
-                    key={cookie.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + (index * 0.1) }}
-                    className="bg-gray-700/30 p-5 rounded-lg border border-gray-600/50"
-                  >
-                    <h3 className="text-lg font-semibold text-white mb-2">{cookie.name}</h3>
-                    <p className="text-gray-300 text-sm mb-3">{cookie.description}</p>
-                    <div className="text-xs text-gray-400">
-                      <span className="font-medium">Examples:</span>
-                      <ul className="list-disc pl-5 mt-1 space-y-1">
-                        {cookie.examples.map((example, i) => (
-                          <li key={i}>{example}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </motion.div>
-                ))}
+        <PolicySection title="How We Use Cookies">
+          <p>We use cookies for various purposes, including:</p>
+          <ul className="list-disc pl-6 space-y-2 mt-2">
+            <li>Remembering your preferences and settings</li>
+            <li>Analyzing site traffic and usage patterns</li>
+            <li>Enabling social media features</li>
+            <li>Personalizing your experience</li>
+            <li>Delivering targeted advertisements</li>
+          </ul>
+        </PolicySection>
+
+        <PolicySection title="Types of Cookies We Use">
+          <div className="space-y-4">
+            {cookieTypes.map((cookie, index) => (
+              <div key={index} className="p-4 bg-accent/5 rounded-lg border border-border">
+                <h3 className="font-medium text-foreground mb-2">{cookie.name}</h3>
+                <p className="text-sm text-muted-foreground mb-2">{cookie.description}</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {cookie.examples.map((example, i) => (
+                    <span key={i} className="text-xs px-2 py-1 bg-accent/10 text-accent-foreground rounded-full">
+                      {example}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </motion.section>
-
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50"
-            >
-              <h2 className="text-2xl font-semibold text-white mb-4 flex items-center">
-                <Settings className="w-6 h-6 mr-2 text-amber-400" />
-                Managing Your Cookie Preferences
-              </h2>
-              <div className="space-y-4 text-gray-300">
-                <p>You can control and/or delete cookies as you wish. Here's how:</p>
-                <ul className="list-disc pl-5 space-y-2">
-                  <li>Most web browsers allow some control of cookies through browser settings</li>
-                  <li>You can delete all cookies that are already on your device</li>
-                  <li>You can set most browsers to prevent cookies from being placed</li>
-                  <li>If you disable cookies, some features of our website may not function properly</li>
-                </ul>
-                <p className="pt-2">
-                  For more detailed information about cookie management with specific web browsers, visit the browser's respective websites.
-                </p>
-              </div>
-            </motion.section>
-
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50"
-            >
-              <h2 className="text-2xl font-semibold text-white mb-4 flex items-center">
-                <Lock className="w-6 h-6 mr-2 text-amber-400" />
-                Third-Party Cookies
-              </h2>
-              <div className="space-y-4 text-gray-300">
-                <p>We may use third-party services that place cookies on your device. These include:</p>
-                <ul className="list-disc pl-5 space-y-2">
-                  <li>Google Analytics for website analytics</li>
-                  <li>Advertising networks for targeted ads</li>
-                  <li>Social media platforms for social sharing features</li>
-                  <li>Payment processors for secure transactions</li>
-                </ul>
-                <p>
-                  These third parties have their own privacy policies and may use cookies, web beacons, and similar technologies to collect information about your use of our website.
-                </p>
-              </div>
-            </motion.section>
-
-            <motion.section 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50"
-            >
-              <h2 className="text-2xl font-semibold text-white mb-4">Changes to This Policy</h2>
-              <p className="text-gray-300">
-                We may update our Cookies Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last Updated" date at the top of this policy.
-              </p>
-              <p className="text-gray-300 mt-4">
-                If you have any questions about this Cookies Policy, please contact us at privacy@codecafe.com.
-              </p>
-            </motion.section>
+            ))}
           </div>
-        </div>
-      </div>
+        </PolicySection>
+
+        <PolicySection title="Managing Cookies">
+          <div className="flex items-start space-x-4 bg-accent/10 p-4 rounded-lg">
+            <Settings className="w-5 h-5 text-accent-foreground mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="font-medium text-accent-foreground">Cookie Preferences</h4>
+              <p className="text-sm text-muted-foreground">
+                You can manage your cookie preferences through your browser settings. Most browsers allow you to refuse or accept cookies and to delete them.
+              </p>
+            </div>
+          </div>
+        </PolicySection>
+
+        <PolicySection title="Important Information">
+          <div className="flex items-start space-x-4 bg-destructive/10 p-4 rounded-lg">
+            <Info className="w-5 h-5 text-destructive mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="font-medium text-destructive">Note About Blocking Cookies</h4>
+              <p className="text-sm text-destructive/90">
+                Blocking some types of cookies may impact your experience of our website and the services we are able to offer.
+              </p>
+            </div>
+          </div>
+        </PolicySection>
+
+        <PolicySection title="Changes to This Policy">
+          <p>We may update our Cookies Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last Updated" date.</p>
+        </PolicySection>
+
+        <PolicySection title="Contact Us">
+          <p>If you have any questions about our use of cookies, please contact us at:</p>
+          <p className="mt-2">
+            <a href="mailto:privacy@codecafe.com" className="text-primary hover:underline">
+              privacy@codecafe.com
+            </a>
+          </p>
+        </PolicySection>
+      </PolicyLayout>
     </PageTransition>
   );
 };

@@ -1,119 +1,185 @@
 import { motion } from 'framer-motion';
-import { Send, Instagram, MessageSquare, Twitter, Github, Linkedin } from 'lucide-react';
+import { Send, Instagram, MessageSquare, MessageCircle } from 'lucide-react';
 
 const CommunitySection = () => {
   const socialLinks = [
-    {
+    { 
       name: 'Telegram',
       icon: Send,
-      color: 'hover:bg-blue-500',
+      bg: 'bg-amber-500 hover:bg-amber-600',
+      border: 'border-amber-500/30 hover:border-amber-500',
+      iconBg: 'bg-amber-100/10 group-hover:bg-amber-100/20',
+      iconColor: 'text-amber-400',
       link: 'https://t.me/yourtelegram',
+      description: 'Join our Telegram group',
     },
     {
-      name: 'GitHub',
-      icon: Github,
-      color: 'hover:bg-gray-700',
-      link: 'https://github.com/yourusername',
+      name: 'Discord',
+      icon: MessageCircle,
+      bg: 'bg-amber-500 hover:bg-amber-600',
+      border: 'border-amber-500/30 hover:border-amber-500',
+      iconBg: 'bg-amber-100/10 group-hover:bg-amber-100/20',
+      iconColor: 'text-amber-400',
+      link: 'https://discord.gg/yourdiscord',
+      description: 'Chat with our community',
     },
     {
       name: 'Instagram',
       icon: Instagram,
-      color: 'hover:bg-gradient-to-r from-pink-500 to-rose-500',
+      bg: 'bg-gradient-to-br from-amber-500 to-amber-400 hover:from-amber-600 hover:to-amber-500',
+      border: 'border-amber-500/30 hover:border-amber-500',
+      iconBg: 'bg-amber-100/10 group-hover:bg-amber-100/20',
+      iconColor: 'text-amber-400',
       link: 'https://instagram.com/yourusername',
-    },
-    {
-      name: 'Twitter',
-      icon: Twitter,
-      color: 'hover:bg-blue-400',
-      link: 'https://twitter.com/yourusername',
+      description: 'Follow our updates',
     },
     {
       name: 'WhatsApp',
       icon: MessageSquare,
-      color: 'hover:bg-green-500',
+      bg: 'bg-amber-500 hover:bg-amber-600',
+      border: 'border-amber-500/30 hover:border-amber-500',
+      iconBg: 'bg-amber-100/10 group-hover:bg-amber-100/20',
+      iconColor: 'text-amber-400',
       link: 'https://wa.me/yourwhatsapp',
-    },
-    {
-      name: 'LinkedIn',
-      icon: Linkedin,
-      color: 'hover:bg-blue-600',
-      link: 'https://linkedin.com/company/yourcompany',
+      description: 'Message us directly',
     },
   ];
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  };
 
   return (
     <section 
       id="join-us"
-      className="relative py-20 overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/images/community-bg.jpg')" }} // ✅ Change path to your image
+      className="relative py-20 overflow-hidden bg-card border-t border-border/50"
     >
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/60 -z-10"></div>
-
-      {/* Optional watermark logo on top */}
-      <div className="absolute inset-0 -z-10 opacity-5">
-        <div 
-          className="w-full h-full bg-[url('/images/Codechef.png')] bg-center bg-contain bg-no-repeat"
-          style={{ backgroundSize: 'min(60vw, 60vh)' }}
-        />
-      </div>
-
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-50/5 to-transparent" />
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16 group/header"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Join Our <span className="text-amber-400">Community</span>
-          </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Connect with us on social media for the latest updates and tech insights.
-          </p>
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-display inline-block"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            Join Our{' '}
+            <span className="relative inline-block pb-1">
+              <span className="relative z-10">Community</span>
+              <span className="absolute bottom-0 left-0 w-full h-2  bg-amber-400 -z-10 group-hover/header:h-3 transition-all duration-300 ease-out" style={{ transform: 'translateY(4px)' }} />
+            </span>
+          </motion.h2>
+          
+          <motion.p 
+            className="text-lg text-muted-foreground max-w-2xl mx-auto group-hover/header:text-foreground/90 transition-colors duration-300"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            Connect with us and be part of something amazing
+          </motion.p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
+        >
           {socialLinks.map((platform, index) => {
             const Icon = platform.icon;
             return (
-              <motion.a
+              <motion.div
                 key={platform.name}
-                href={platform.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                whileHover={{ y: -5, scale: 1.1 }}
-                viewport={{ once: true }}
-                transition={{ 
-                  duration: 0.3, 
-                  delay: index * 0.05,
-                  type: 'spring',
-                  stiffness: 300,
-                  damping: 15
+                variants={item}
+                whileHover={{ 
+                  y: -8,
+                  transition: { 
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 15
+                  } 
                 }}
-                className={`w-16 h-16 rounded-2xl bg-white/5 backdrop-blur-sm flex items-center justify-center text-white text-2xl transition-all duration-300 ${platform.color} border border-white/10`}
-                aria-label={platform.name}
+                className="group relative"
               >
-                <Icon className="w-7 h-7" />
-              </motion.a>
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400 to-amber-600 rounded-xl opacity-0 group-hover:opacity-70 blur transition duration-500 group-hover:duration-200 -z-10" />
+                <a
+                  href={platform.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`relative flex flex-col items-center p-6 rounded-xl border border-border/50 bg-card/80 backdrop-blur-sm transition-all duration-300 group-hover:bg-card/90 group-hover:border-amber-400/30 group-hover:shadow-lg group-hover:shadow-amber-500/10`}
+                >
+                  <motion.div 
+                    className={`w-14 h-14 rounded-2xl ${platform.iconBg} flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-amber-50/20`}
+                    whileHover={{ 
+                      rotate: 15, 
+                      scale: 1.1,
+                      boxShadow: '0 0 15px rgba(251, 191, 36, 0.3)'
+                    }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    <Icon className={`w-6 h-6 ${platform.iconColor} group-hover:scale-110 transition-transform`} />
+                  </motion.div>
+                  <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-amber-500 transition-colors">
+                    {platform.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground text-center group-hover:text-foreground/90 transition-colors">
+                    {platform.description}
+                  </p>
+                  <motion.span 
+                    className="mt-4 text-xs text-muted-foreground group-hover:text-amber-500 group-hover:font-medium transition-all flex items-center gap-1 cursor-pointer"
+                    initial={{ opacity: 0, x: -5 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    whileHover={{ x: 3 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                  >
+                    Join now
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      className="lucide lucide-arrow-right group-hover:translate-x-1 transition-transform"
+                    >
+                      <path d="M5 12h14"/>
+                      <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                  </motion.span>
+                </a>
+              </motion.div>
             );
           })}
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="mt-16 text-center"
-        >
-          <p className="text-gray-300 mb-6">
-            Follow us for tech insights, updates, and community events
-          </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto"></div>
         </motion.div>
       </div>
     </section>
