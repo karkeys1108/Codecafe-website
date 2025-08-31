@@ -15,6 +15,7 @@ import CraftingSection from './components/sections/CraftingSection';
 import Testimonials from './components/sections/Testimonials';
 import CommunitySection from './components/sections/CommunitySection';
 import GitHubStarPrompt from './components/GitHubStarPrompt';
+import PageTransition from './components/common/PageTransition'; // Import PageTransition
 
 // Lazy load pages
 const Home = lazy(() => import('./pages/Home'));
@@ -73,7 +74,11 @@ function AppContent() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/terms-of-service" element={
+                <PageTransition>
+                  <TermsOfService />
+                </PageTransition>
+              } />
               <Route path="/cookies-policy" element={<CookiesPolicy />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

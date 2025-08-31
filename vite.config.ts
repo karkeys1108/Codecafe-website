@@ -2,9 +2,9 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: '/',
+  base: mode === 'production' ? '/' : '/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
@@ -17,10 +17,14 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    historyApiFallback: true,
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
     },
   },
-});
+  define: {
+    'process.env': {}
+  }
+}));
