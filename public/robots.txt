@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://codecafe.live/sitemap.xml
