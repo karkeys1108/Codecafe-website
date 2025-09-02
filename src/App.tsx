@@ -1,7 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import LoadingAnimation from './components/common/LoadingAnimation';
@@ -24,6 +25,7 @@ const Portfolio = lazy(() => import('./pages/Portfolio'));
 const WorkWithUs = lazy(() => import('./pages/WorkWithUs'));
 const Contact = lazy(() => import('./pages/Contact'));
 const About = lazy(() => import('./pages/About'));
+const Blog = lazy(() => import('./pages/Blog'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const CookiesPolicy = lazy(() => import('./pages/CookiesPolicy'));
@@ -73,6 +75,11 @@ function AppContent() {
               <Route path="/work-with-us" element={<WorkWithUs />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
+              <Route path="/blog" element={
+                <PageTransition>
+                  <Blog />
+                </PageTransition>
+              } />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={
                 <PageTransition>
@@ -91,20 +98,17 @@ function AppContent() {
       </main>
       <GitHubStarPrompt />
       <Footer />
-      <Toaster position="bottom-right" />
-      <Sonner />
     </div>
   );
 }
 
 function App() {
   return (
-    <>
+    <ErrorBoundary>
       <Toaster position="top-center" />
-      <Router>
-        <AppContent />
-      </Router>
-    </>
+      <Sonner position="bottom-right" />
+      <AppContent />
+    </ErrorBoundary>
   );
 }
 
