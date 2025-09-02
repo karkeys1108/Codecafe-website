@@ -11,75 +11,57 @@ export default function WhyCodeCafe() {
   ];
 
   return (
-    <section className="relative hidden sm:block">
-      <div className=" px-20 relative w-full flex flex-col items-center justify-center pt--10 pb-20">
-        {/* Futuristic BG */}
+    <section className="relative w-full overflow-hidden">
+      <div className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 max-w-7xl mx-auto">
+        {/* Background Elements */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-900 via-black to-gray-900">
-          {/* glowing gradient lines */}
-          <div className="absolute top-0 left-10 w-px h-full bg-gradient-to-b from-transparent via-indigo-500/40 to-transparent"></div>
-          <div className="absolute top-0 right-10 w-px h-full bg-gradient-to-b from-transparent via-purple-500/40 to-transparent"></div>
-
-          {/* radial gradient glow */}
-          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-4 sm:left-10 w-px h-full bg-gradient-to-b from-transparent via-indigo-500/40 to-transparent"></div>
+          <div className="absolute top-0 right-4 sm:right-10 w-px h-full bg-gradient-to-b from-transparent via-purple-500/40 to-transparent"></div>
+          <div className="absolute top-1/3 left-1/4 sm:left-1/3 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-56 sm:w-64 md:w-80 h-56 sm:h-64 md:h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Side - Heading */}
           <motion.div
             initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="space-y-4 sm:space-y-6 text-center md:text-left"
           >
-            <h2 className="text-5xl font-bold font-mozilla">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-mozilla">
               Why{" "}
               <span className="bg-gradient-to-r from-amber-400 to-amber-600 text-transparent bg-clip-text font-mozilla">
                 CodeCafe ?
               </span>
             </h2>
-            <p className="text-gray-400 text-lg leading-relaxed font-nata">
+            <p className="text-gray-400 text-base sm:text-lg leading-relaxed font-nata">
               We transform bold ideas into seamless digital solutions that
               accelerate growth and make a real impact.
             </p>
           </motion.div>
 
-          {/* Right Side - Feature Chips with Circuit Lines */}
-          <div className="relative flex flex-col items-start space-y-6 px-20 font-sans">
+          {/* Right Side - Feature Chips */}
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: feature.delay, duration: 0.6 }}
-                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: feature.delay }}
+                className="p-4 sm:p-5 bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl hover:border-amber-500/30 transition-colors duration-300"
               >
-                {/* Chip */}
-                <div className="px-5 py-3 bg-white/5 rounded-[25%] border border-white/10 backdrop-blur-md shadow-md hover:shadow-amber-500/20 transition text-sm font-medium">
-                  {feature.title}
-                </div>
-
-                {/* Futuristic Dot + Line */}
-                <div
-                  className="absolute left-1/2 transform -translate-x-1/2"
-                  style={{
-                    top: "100%",
-                    height: "30px",
-                    width: "2px",
-                    background:
-                      "linear-gradient(to bottom, #f59e0b, transparent)",
-                    marginTop: "4px",
-                  }}
-                >
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-amber-400 rounded-full shadow-lg shadow-amber-500/40" />
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0"></div>
+                  <span className="text-sm sm:text-base text-gray-200">{feature.title}</span>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
-        
       </div>
-      
     </section>
   );
 }
